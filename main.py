@@ -27,7 +27,7 @@ def main():
     except ValueError as error:
         print("Error:", error)
 
-    # servicios disponboles
+    #servicios disponboles
     print("\nSERVICIOS DISPONIBLES")
     try:
         sala = Sala("Sala de reuniones", 50000, 10)
@@ -44,6 +44,31 @@ def main():
     except ValueError as error:
         print("Error al crear un servicio:", error)
 
+    #testeo de costos con impuestos y dctos.
+    print("\nCALCULO DE COSTOS")
+
+    try:
+        sala = Sala("Sala de reuniones", 50000, 10)
+
+        #costo sin impuesto ni descto.
+        print("Costo normal:", sala.calcular_costo(2))
+        #costo con +19%
+        print("Costo con impuesto:", sala.calcular_costo(2, 19))
+        # Costo con +19% y dcto.
+        print("Costo con impuesto y descuento:",
+              sala.calcular_costo(2, 19, 10))
+
+    except ValueError as error:
+        print("Error en el calculo:", error)
+
+    #prueba de un dcto. incorrecto
+    print("Prueba de descuento con error")
+
+    try:
+        print(sala.calcular_costo(2, 19, 150))
+
+    except ValueError as error:
+        print("Error controlado:", error)
 
 #ejecuta main function
 if __name__ == "__main__":

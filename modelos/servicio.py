@@ -3,9 +3,7 @@ from abc import ABC, abstractmethod
 
 #Clase abs. que representa un servicio
 class Servicio(ABC):
-
     def __init__(self, nombre, precio_hora):
-
         #validacion nombre
         if not isinstance(nombre, str) or not nombre.strip():
             raise ValueError("Nombre del servicio invalido.")
@@ -22,8 +20,20 @@ class Servicio(ABC):
     #Consultar el nombre del servicio
     def obtener_nombre(self):
         return self._nombre
+    #valida porcentajes de impuestos y dcto.
+    def validar_porcentajes(self, impuesto, descuento):
 
-    # Validar la duracion solicitada
+        if (isinstance(impuesto, bool)
+                or not isinstance(impuesto, (int, float))
+                or impuesto < 0 or impuesto > 100):
+            raise ValueError("El impuesto debe estar entre 0 y 100.")
+
+        if (isinstance(descuento, bool)
+                or not isinstance(descuento, (int, float))
+                or descuento < 0 or descuento > 100):
+            raise ValueError("El dcto. debe estar entre 0 y 100.")
+
+    #Valida la duracion que se solicitada
     @abstractmethod
     def validar_parametros(self, horas):
         pass
@@ -32,7 +42,6 @@ class Servicio(ABC):
     @abstractmethod
     def calcular_costo(self, horas):
         pass
-
     #mostrar la descripcion del servicio
     @abstractmethod
     def describir_servicio(self):

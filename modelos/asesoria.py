@@ -18,9 +18,15 @@ class Asesoria(Servicio):
             raise ValueError("Las horas deben ser mayores que cero.")
 
     #calcular el costo de la asesoria
-    def calcular_costo(self, horas):
+    def calcular_costo(self, horas, impuesto=0, descuento=0):
         self.validar_parametros(horas)
-        return self._precio_hora * horas
+        self.validar_porcentajes(impuesto, descuento)
+        subtotal = self._precio_hora * horas
+        valor_descuento = subtotal * descuento / 100
+        subtotal_descuento = subtotal - valor_descuento
+        valor_impuesto = subtotal_descuento * impuesto / 100
+        total = subtotal_descuento + valor_impuesto
+        return round(total, 2)
 
     #describir la asesoria
     def describir_servicio(self):
