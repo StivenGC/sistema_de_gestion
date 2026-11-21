@@ -1,21 +1,24 @@
 #se importa la clase Entidad
 from modelos.entidad import Entidad
 
+#para manejo de excepciones
+from excepciones.errores import ErrorCliente
+
 #Clase cliente que hereda de Entidad
 class Cliente(Entidad):
     #constructor del cliente
     def __init__(self, identificador, nombre, correo):
         #validacion del identificador
         if not isinstance(identificador, int) or isinstance(identificador, bool) or identificador <= 0:
-            raise ValueError("El identificador debe ser mayor a cero.")
+            raise ErrorCliente("El identificador debe ser mayor a cero.")
 
         #validacion del nombre
         if not isinstance(nombre, str) or not nombre.strip():
-            raise ValueError("El nombre no puede estar vacio.")
+            raise ErrorCliente("El nombre no puede estar vacio.")
 
         # validacion del correo
         if not isinstance(correo, str) or "@" not in correo or "." not in correo.split("@")[-1]:
-            raise ValueError("El correo electronico no es valido.")
+            raise ErrorCliente("El correo electronico no es valido.")
 
         #llamada al constructor de la clase padre
         super().__init__(identificador)

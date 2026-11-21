@@ -5,8 +5,11 @@
 from modelos.cliente import Cliente
 from modelos.sala import Sala
 from modelos.equipo import Equipo
+
 from modelos.asesoria import Asesoria
 from modelos.reserva import Reserva
+
+from utilidades.registro import registrar_evento
 
 
 def main():
@@ -18,6 +21,7 @@ def main():
         print(cliente1.mostrar_informacion())
 
     except ValueError as error:
+        registrar_evento(f"ERROR: {error}")
         print("Error:", error)
 
     #cliente invalido
@@ -26,6 +30,7 @@ def main():
         print(cliente2.mostrar_informacion())
 
     except ValueError as error:
+        registrar_evento(f"ERROR: {error}")
         print("Error:", error)
 
     #servicios disponboles
@@ -40,7 +45,8 @@ def main():
             print("\n" + servicio.describir_servicio())
             print("Costo por 2 horas: $", servicio.calcular_costo(2))
     except ValueError as error:
-        print("Error al crear un servicio:", error)
+        registrar_evento(f"ERROR: {error}")
+        print("Error:", error)
 
     #testeo de costos con impuestos y dctos.
     print("\nCalculo de costos")
@@ -57,14 +63,16 @@ def main():
               sala.calcular_costo(2, 19, 10))
 
     except ValueError as error:
-        print("Error en el calculo:", error)
+        registrar_evento(f"ERROR: {error}")
+        print("Error:", error)
 
     #prueba de un dcto. incorrecto
     print("Prueba de descuento con error")
     try:
         print(sala.calcular_costo(2, 19, 150))
     except ValueError as error:
-        print("Error controlado:", error)
+        registrar_evento(f"ERROR: {error}")
+        print("Error:", error)
         
     print("------------------------------")    
     print("Gestion de las reservas")
@@ -87,7 +95,8 @@ def main():
 
         print(reserva1.mostrar_informacion())
     except ValueError as error:
-        print("Error en la reserva:", error)
+        registrar_evento(f"ERROR: {error}")
+        print("Error:", error)
 
     #reserva con horas invalidas
     print("Test con errores controlados")
@@ -96,7 +105,8 @@ def main():
         reserva2 = Reserva(cliente, sala, -2)
         print(reserva2.mostrar_informacion())
     except ValueError as error:
-        print("Error controlado:", error)
+        registrar_evento(f"ERROR: {error}")
+        print("Error:", error)
 
     #Cancelar reserva
     print("Cancelacion de reserva")
@@ -104,15 +114,43 @@ def main():
         reserva1.cancelar()
         print(reserva1.mostrar_informacion())
     except ValueError as error:
+        registrar_evento(f"ERROR: {error}")
         print("Error:", error)
 
     #Intento de confirmar reserva cancelada
-    print("\Prueba de conexion invalida")
+    print("Prueba de conexion invalida")
 
     try:
         reserva1.confirmar()
     except ValueError as error:
-        print("Error controlado:", error)
+        registrar_evento(f"ERROR: {error}")
+        print("Error:", error)
+
+
+    print("\nTesteo de excepciones")
+    try:
+        #reserva valida
+        cliente = Cliente(4, "Edinson Gamez", "edgamez12345@gmail.com")
+        equipo = Equipo("Computador", 30000, "Portatil")
+
+        reserva = Reserva(cliente, equipo, 2)
+        reserva.confirmar()
+
+        total = reserva.procesar()
+
+    except ValueError as error:
+        print("Error:", error)
+        registrar_evento(f"ERROR: {error}")
+
+    else:
+        print("Operacion existosa.")
+        print("Total de la reserva: $", total)
+        registrar_evento("Operacion finalizada sin errores.")
+
+    finally:
+        #Se ejecuta aunque ocurra un error
+        print("Finalizo la operacion.")
+        registrar_evento("FIn prueba.")
 
 #ejecuta main function
 if __name__ == "__main__":
