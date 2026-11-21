@@ -6,12 +6,13 @@ from modelos.cliente import Cliente
 from modelos.sala import Sala
 from modelos.equipo import Equipo
 from modelos.asesoria import Asesoria
+from modelos.reserva import Reserva
 
 
 def main():
     print("Sistema Integral de Gestión integral")
     #cliente valido
-    print("\nREGISTRO DE CLIENTES")
+    print("Registro de Clientes")
     try:
         cliente1 = Cliente(1, "stiven gamez", "stiven1235@gmail.com")
         print(cliente1.mostrar_informacion())
@@ -28,24 +29,21 @@ def main():
         print("Error:", error)
 
     #servicios disponboles
-    print("\nSERVICIOS DISPONIBLES")
+    print("\nServicios Disponibles")
     try:
         sala = Sala("Sala de reuniones", 50000, 10)
         equipo = Equipo("Computador portatil", 30000, "Tecnologia")
         asesoria = Asesoria("Asesoria de php", 80000, "Programacion")
-
         #Lista de objetos, es para diferentes clases
         servicios = [sala, equipo, asesoria]
-
         for servicio in servicios:
             print("\n" + servicio.describir_servicio())
             print("Costo por 2 horas: $", servicio.calcular_costo(2))
-
     except ValueError as error:
         print("Error al crear un servicio:", error)
 
     #testeo de costos con impuestos y dctos.
-    print("\nCALCULO DE COSTOS")
+    print("\nCalculo de costos")
 
     try:
         sala = Sala("Sala de reuniones", 50000, 10)
@@ -63,10 +61,56 @@ def main():
 
     #prueba de un dcto. incorrecto
     print("Prueba de descuento con error")
-
     try:
         print(sala.calcular_costo(2, 19, 150))
+    except ValueError as error:
+        print("Error controlado:", error)
+        
+    print("------------------------------")    
+    print("Gestion de las reservas")
+    #creear reserva con info. correcta
+    try:
+        cliente = Cliente(3, "Stiven Cardona", "stivencar12345@gmail.com")
+        sala = Sala("Sala de reuniones", 50000, 10)
 
+        reserva1 = Reserva(cliente, sala, 3)
+
+        print("\nReserva creada:")
+        print(reserva1.mostrar_informacion())
+
+        #confirmar
+        reserva1.confirmar()
+
+        #procesar y calcular costo
+        total = reserva1.procesar()
+        print("Costo total: $", total)
+
+        print(reserva1.mostrar_informacion())
+    except ValueError as error:
+        print("Error en la reserva:", error)
+
+    #reserva con horas invalidas
+    print("Test con errores controlados")
+
+    try:
+        reserva2 = Reserva(cliente, sala, -2)
+        print(reserva2.mostrar_informacion())
+    except ValueError as error:
+        print("Error controlado:", error)
+
+    #Cancelar reserva
+    print("Cancelacion de reserva")
+    try:
+        reserva1.cancelar()
+        print(reserva1.mostrar_informacion())
+    except ValueError as error:
+        print("Error:", error)
+
+    #Intento de confirmar reserva cancelada
+    print("\Prueba de conexion invalida")
+
+    try:
+        reserva1.confirmar()
     except ValueError as error:
         print("Error controlado:", error)
 
