@@ -5,19 +5,29 @@ from excepciones.errores import ErrorServicio
 
 #Clase abs. que representa un servicio
 class Servicio(ABC):
-    def __init__(self, nombre, precio_hora):
+    #constructor
+    def __init__(self, nombre, precio_hora, disponible=True):
         #validacion nombre
         if not isinstance(nombre, str) or not nombre.strip():
             raise ErrorServicio("Nombre del servicio invalido.")
+        
 
         #validacion precio
         if (isinstance(precio_hora, bool)
                 or not isinstance(precio_hora, (int, float))
                 or precio_hora <= 0):
             raise ErrorServicio("El precio debe ser mayor que cero.")
+        
+        #validacion de disponibilidad (true or false)
+        if not isinstance(disponible, bool):
+            raise ErrorServicio("La disponibilidad no es valida.")
 
         self._nombre = nombre.strip()
         self._precio_hora = precio_hora
+        self.disponible = disponible #Se guarda el estado disponible
+        
+
+
 
     #Consultar el nombre del servicio
     def obtener_nombre(self):
@@ -44,7 +54,10 @@ class Servicio(ABC):
     @abstractmethod
     def calcular_costo(self, horas):
         pass
+    
     #mostrar la descripcion del servicio
     @abstractmethod
     def describir_servicio(self):
         pass
+    
+    

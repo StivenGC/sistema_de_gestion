@@ -1,0 +1,19 @@
+[2026-11-21 16:59:12] cliente registrado correctamente.
+[2026-11-21 16:59:12] ERROR: El nombre no puede estar vacio.
+[2026-11-21 16:59:12] ERROR: La capacidad debe ser mayor a cero.
+[2026-11-21 16:59:12] ERROR: El tipo de equipo no es valido.
+[2026-11-21 16:59:12] ERROR: El precio debe ser mayor que cero.
+[2026-11-21 16:59:12] ERROR: El dcto. debe estar entre 0 y 100.
+[2026-11-21 16:59:12] Reserva creada correctamente.
+[2026-11-21 16:59:12] Reserva confirmada correctamente.
+[2026-11-21 16:59:12] Reserva procesada correctamente.
+[2026-11-21 16:59:12] ERROR: No fue posible crear la reserva.
+[2026-11-21 16:59:12] Reserva cancelada correctamente.
+[2026-11-21 16:59:12] ERROR: No se puede confirmar una reserva cancelada.
+[2026-11-21 16:59:12] ERROR: El servicio no esta disponible.
+[2026-11-21 16:59:12] Reserva creada correctamente.
+[2026-11-21 16:59:12] Reserva confirmada correctamente.
+[2026-11-21 16:59:12] Reserva procesada correctamente.
+[2026-11-21 16:59:12] Operacion finalizada sin errores.
+[2026-11-21 16:59:12] FIn prueba.
+[2026-11-21 16:59:12] Finalizaron las operaciones del sistema.

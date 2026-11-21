@@ -1,11 +1,8 @@
 #importo clases que se usaran
 from modelos.cliente import Cliente
 from modelos.servicio import Servicio
-
-#para manejo de excepciones
-from excepciones.errores import ErrorReserva
-#registroe event.
-from utilidades.registro import registrar_evento
+from excepciones.errores import ErrorReserva #para manejo de excepciones
+from utilidades.registro import registrar_evento #registro event.
 
 #Clase para reserva
 class Reserva:
@@ -13,11 +10,14 @@ class Reserva:
     def __init__(self, cliente, servicio, horas):
         #validacion del cliente
         if not isinstance(cliente, Cliente):
-            raise ErrorReserva("El cliente no es valido.")
+            raise ErrorReserva("El cliente no es valido")
 
         #validacion servicio
         if not isinstance(servicio, Servicio):
-            raise ErrorReserva("El servicio no es valido.")
+            raise ErrorReserva("El servicio no es valido")
+        
+        if not servicio.disponible:
+            raise ErrorReserva("El servicio no esta disponible.")
 
         #validacion deduracion reserva
         try:
@@ -60,6 +60,10 @@ class Reserva:
     def procesar(self):
         if self.estado != "Confirmada":
             raise ErrorReserva("La reserva debe estar confirmada.")
+        
+        if not self.servicio.disponible:
+            raise ErrorReserva("El servicio no esta disponible.")
+        
         try:
             total = self.servicio.calcular_costo(self.horas)
 
@@ -67,6 +71,7 @@ class Reserva:
             raise ErrorReserva("Error al calcular el costo de la reserva.") from error
 
         registrar_evento("Reserva procesada correctamente.")
+        
         return total
 
     #print info. reserva
